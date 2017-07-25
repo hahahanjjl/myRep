@@ -16,7 +16,8 @@ public class Main{
 
   public static void main(String[] args){
 	  String url = args[0];
-	  String key = args[1];
+	  String rootPath=args[1];
+	  String key = args[2];
 	  ZkClient zkClient = null;
 	  try{
 		  zkClient = new ZkClient(url,TIME_OUT);
@@ -28,13 +29,13 @@ public class Main{
 			  System.out.println("连接失败");
 		  }else{
 			  System.out.println("连接成功。。。。");
-			  List<String> nodes = zkClient.getChildren(ROOT_PATH);
+			  List<String> nodes = zkClient.getChildren(rootPath);
 			  if(CollectionUtils.isEmpty(nodes)){
 				  System.out.println("节点为空");
 			  }else{
 				  for(String node : nodes){
 					  if(node.indexOf(key) == 0){
-						  boolean isDelete = zkClient.deleteRecursive(ROOT_PATH+"/"+node);
+						  boolean isDelete = zkClient.deleteRecursive(rootPath+"/"+node);
 						  if(isDelete){
 							  System.out.println("删除节点 " + node + " 成功");
 						  }
